@@ -1,9 +1,6 @@
 import math
 import os
 from iexfinance.stocks import Stock
-import pandas as pd
-from datetime import datetime
-import matplotlib.pyplot as plt
 
 from Stock_Data import StockData
 
