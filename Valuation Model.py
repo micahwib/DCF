@@ -27,7 +27,7 @@ def calculateNetMargin(netIncome, revenue):
     netMargin = netIncome / revenue
     total = sum(netMargin)
     avgNetMargin = total / len(netMargin)
-    print("net margin", avgNetMargin)
+    print("net margin:", "%.2f" % (avgNetMargin * 100), "%")
 
     return avgNetMargin
 
@@ -41,10 +41,10 @@ def caclulateNetIncomProjection(NetIncomeProjection, RevenueProjection, avgNetMa
 # calculate average FCF/NI ratio
 def calculateFreeCashFlowNetIncomeRatio(FreeCashFlow, netIncome):
     FCF_NI_Ratio = FreeCashFlow / netIncome
-    print("FCF ratio", FCF_NI_Ratio)
+    #print("FCF ratio", FCF_NI_Ratio)
     ratioTotal = sum(FCF_NI_Ratio)
     avgFreeCashFlowNetIncomeRatio = ratioTotal / len(FCF_NI_Ratio)
-    print("net income ratio", avgFreeCashFlowNetIncomeRatio)
+    #print("Average Net Income Ratio",  "%.2f" % ((avgFreeCashFlowNetIncomeRatio - 1) * 100), "%")
 
     return avgFreeCashFlowNetIncomeRatio
 
@@ -53,7 +53,7 @@ def calculateFreeCashFlowNetIncomeRatio(FreeCashFlow, netIncome):
 def calculateFreeCashFlowProjection(FCFProjection, NetIncomeProjection, avgFreeCashFlowNetIncomeRatio):
     for i in NetIncomeProjection:
         FCFProjection.append(math.trunc(i * avgFreeCashFlowNetIncomeRatio))
-    print("Free Cash Flow Projection:", FCFProjection)
+    #print("Free Cash Flow Projection:", FCFProjection)
 
 
 # Calculate WACC
@@ -70,7 +70,7 @@ def calculateWACC(stock):
 
     # calculating WACC
     WACC = debtWeight * AdjustedCostOfDebt * (1 - (TaxExpense / EBIT)) + EquityWeight * CostOfEquity
-    print("WACC:", WACC)
+    print("WACC:", "%.2F" % (WACC * 100), "%")
 
     return WACC
 
@@ -127,11 +127,11 @@ def calculatePresentValue(PresentValueFreeCashFlow, FCFProjection, WACC, Termina
 # calculate intrinsic value of the business
 def calculateIntrinsicValue(stock, PresentValueFreeCashFlow):
     OustandingShares = stock.getAdvanceStats()['sharesOutstanding'][0]
-    print(OustandingShares)
+    #print("Outstanding shares (millions):", OustandingShares / 1000000)
     IntrinsicValueOfBusiness = sum(PresentValueFreeCashFlow)
-    print(IntrinsicValueOfBusiness)
+    #print("Intrinsic Value of the Business (millions):", IntrinsicValueOfBusiness / 1000000)
     FairValue = IntrinsicValueOfBusiness / OustandingShares
-    print(FairValue)
+    print("Fair Value:", FairValue)
     return FairValue
 
 
@@ -170,7 +170,6 @@ def checkValid():
 
 def main():
     stock = checkValid()
-    print(stock.getAdvanceStats()['marketcap'][0])
     DCF(stock)
 
 
